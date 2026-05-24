@@ -1,6 +1,8 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
 import { invoke } from '@tauri-apps/api/core'
 import { getCurrentWindow } from '@tauri-apps/api/window'
+import { DumoguScrollbar } from 'dumogu-scrollbar'
+import 'dumogu-scrollbar/dist/dumogu-scrollbar.css'
 import './App.css'
 
 type PowerAction = 'shutdown' | 'restart' | 'hibernate' | 'sleep'
@@ -57,6 +59,34 @@ function App() {
       }
       clickCountRef.current = 0
     }, 800)
+  }, [])
+
+  // Custom scrollbar
+  const mainRef = useRef<HTMLElement | null>(null)
+  const containerRef = useRef<HTMLDivElement | null>(null)
+  const scrollbarRef = useRef<DumoguScrollbar | null>(null)
+  const rafRef = useRef<number>(0)
+
+  useEffect(() => {
+    if (!mainRef.current || !containerRef.current) return
+    const sb = new DumoguScrollbar({
+      keepShow: false,
+      stopClickPropagation: true,
+    })
+    sb.bind(mainRef.current)
+    sb.mount(containerRef.current)
+    scrollbarRef.current = sb
+
+    const tick = () => {
+      sb.update()
+      rafRef.current = requestAnimationFrame(tick)
+    }
+    rafRef.current = requestAnimationFrame(tick)
+
+    return () => {
+      cancelAnimationFrame(rafRef.current)
+      sb.destroy()
+    }
   }, [])
 
   // Countdown timer: only depends on isActive
@@ -176,16 +206,16 @@ function App() {
         <div className="bg-orb bg-orb-3" />
       </div>
 
-      <div className="app-container">
+      <div className="app-container" ref={containerRef}>
         {/* Header */}
         <header className="header" data-tauri-drag-region>
-          <div className="logo" onClick={handleLogoClick}>
-            <div className="logo-icon">
+          <div className="logo" data-tauri-drag-region>
+            <div className="logo-icon" onClick={handleLogoClick}>
               <img src="/favicon.svg" alt="" width="20" height="20" />
             </div>
-            <div className="logo-text">
-              <h1>翼航</h1>
-              <span className="logo-sub">Windows 助手</span>
+            <div className="logo-text" data-tauri-drag-region>
+              <h1 data-tauri-drag-region>翼航</h1>
+              <span className="logo-sub" data-tauri-drag-region>Windows 助手</span>
             </div>
           </div>
           {isTestMode && (
@@ -207,7 +237,7 @@ function App() {
           </div>
         </header>
 
-        <main className="main">
+        <main className="main" ref={mainRef}>
           {/* Countdown Display */}
           <section className={`countdown-section ${isActive ? 'active' : ''}`}>
             <div className="countdown-ring">

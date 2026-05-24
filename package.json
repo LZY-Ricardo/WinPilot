@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@tauri-apps/api": "^2.11.0",
+    "dumogu-scrollbar": "^1.0.3",
     "react": "^19.2.6",
     "react-dom": "^19.2.6"
   },

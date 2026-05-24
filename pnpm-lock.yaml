@@ -11,6 +11,9 @@ importers:
       '@tauri-apps/api':
         specifier: ^2.11.0
         version: 2.11.0
+      dumogu-scrollbar:
+        specifier: ^1.0.3
+        version: 1.0.3
       react:
         specifier: ^19.2.6
         version: 19.2.6
@@ -540,6 +543,9 @@ packages:
   detect-libc@2.1.2:
     resolution: {integrity: sha512-Btj2BOOO83o3WyH59e8MgXsxEQVcarkUOpEYrubB0urwnN10yQ364rsiByU11nZlqWYZm05i/of7io4mzihBtQ==}
     engines: {node: '>=8'}
+
+  dumogu-scrollbar@1.0.3:
+    resolution: {integrity: sha512-uiIvtpRZKzVce9AG0bnyjlPG8AqWpK43NgdGsKKSeZmmCENbNuFYrYcm7pat+lOVoa/lUxlc/RERHMqRS8c+tw==}
 
   electron-to-chromium@1.5.361:
     resolution: {integrity: sha512-Q6Hts7N9FnJc5LeGRINFvLhCI9xZmNtTDe5ZbcVezQz7cU4a8Aua3GH1b8J2XY8Al9PF+OCwYqhgsOOheMdvkA==}
@@ -1458,6 +1464,8 @@ snapshots:
   deep-is@0.1.4: {}
 
   detect-libc@2.1.2: {}
+
+  dumogu-scrollbar@1.0.3: {}
 
   electron-to-chromium@1.5.361: {}
 
